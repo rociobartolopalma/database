@@ -1,10 +1,12 @@
 const express = require('express');
+const cors =require('cors');
+require('dotenv').config();
 const usersRouter = require('./routes/users')
 
 class Server {
     constructor() {
-        this.app = express();   //Instancia de express
-        this.port = 3000;       //Puerto para el servidor
+        this.app = express();  
+        this.port = process.env.PORT;      
 
         // http://localhost:3000/api/v1/users
         this.basePath = '/api/v1';
@@ -13,11 +15,11 @@ class Server {
 
         this.middlewares();
         this.routes();
-
     }
 
 middlewares(){
-    this.app.use(express.json());    //Para poder interpretar texto en 
+    this.app.use(cors());
+    this.app.use(express.json());  
 }
 
 routes() {
