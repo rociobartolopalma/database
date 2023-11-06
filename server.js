@@ -1,36 +1,34 @@
 const express = require('express');
-const cors =require('cors');
+const cors = require('cors');
 require('dotenv').config();
-const usersRouter = require('./routes/users')
-
+const userRouter=require ('./routes/users')
 class Server {
-    constructor() {
-        this.app = express();  
-        this.port = process.env.PORT;      
+    constructor(){
+        this.app = express(); //Se instancia Express
+        this.port = process.env.PORT;    //Definimos el puerto
 
-        // http://localhost:3000/api/v1/users
-        this.basePath = '/api/v1';
+        //paths   http://localhost:3000/api/v1 
+        this.basePath = '/api/v1';   //Ruta base
+        this.usersPath = `${this.basePath}/users`;//Path para la tabla users
 
-        this.usersPath = `${this.basePath}/users`;
+        this.middlewares(); //Invocacion de los middlewares
 
-        this.middlewares();
         this.routes();
     }
 
-middlewares(){
-    this.app.use(cors());
-    this.app.use(express.json());  
-}
+    middlewares(){
+        this.app.use(cors());
+        this.app.use(express.json()) //Para poder interpretar texto en formato JSON
+    }
 
-routes() {
-    this.app.use(this.usersPath, usersRouter);
-}
+    routes(){
+        this.app.use(this.usersPath, userRouter); //EndPoint de users
+    }
 
-listen() {
-    this.app.listen(this.port,() => {
-        console.log("Listenig on port " + this.port)
-    })
-
+    listen (){
+        this.app.listen(this.port, () =>{
+            console.log("Server listening on port"+ this.port )
+        });
 }
 }
 module.exports = Server;
