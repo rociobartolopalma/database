@@ -1,76 +1,31 @@
-const usermodels = {
-getAll: `
-    SELECT 
-    * 
-    FROM 
-    user`,
+const usersModel = {
+    getAll: `
+        SELECT * FROM users`,
 
-getByID: `
-    SELECT
-    *
-    FROM
-    user
-    WHERE
-    id= ?
-    `,
+    getByID:`SELECT * FROM users WHERE id= ?`, 
 
-addRow:`
-    INSERT INTO
-    user(
-        username,
-        email,
-        password,
-        name,
-        lastname,
-        phone_num,
-        role_id,
-        id_active
-    )
-    VALUES (
-        ?,?,?,?,?,?,?,?
-    )`,
+    addRow: `INSERT INTO users (username, email, password, name, lastname, phone_number, role_id, is_active)
+              VALUES (?, ?, ?, ?, ?, ?, ? ,?)`,
+              
+    getByUsername: `
+    SELECT * FROM users WHERE username = ?`,
 
-getByUsername:`
-    SELECT 
-    * 
-    FROM 
-    user 
-    WHERE username =?
-    `,
+    getByEmail: `
+    SELECT id FROM users WHERE email = ?`,
 
-getByEmail:`
-    SELECT 
-    id 
-    FROM 
-    user 
-    WHERE 
-    email =?
-    `,
+    updateRow: `UPDATE users SET
+                 username = ?,
+                 email = ?,
+                 password = ?,
+                 name = ?,
+                 lastname = ?,
+                 phone_number =?,
+                 role_id = ?,
+                 is_active = ? 
+                 WHERE id =?`,
 
-updateUser:`
-    UPDATE
-    user
-    SET
-        username = ?,
-        email = ?,
-        password = ?,
-        name = ?,
-        lastname = ?,
-        phone_num = ?,
-        role_id = ?,
-        id_active = ?
-        WHERE 
-        id =?
-    `,
+    deleteRow: `UPDATE users SET is_active = 0 WHERE id = ?`,
 
-deleteRow:`
-    UPDATE 
-    user
-    SET
-    id_active =0
-    WHERE 
-    id=?
-    `,  
-}
+};
 
-module.exports = usermodels;
+module.exports = usersModel;
